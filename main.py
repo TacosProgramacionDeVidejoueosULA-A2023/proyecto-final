@@ -11,7 +11,7 @@ class Game:
         pygame.display.set_caption("Henry Pottery")
         self.clock = pygame.time.Clock()
 
-        self.level = Level()
+        self.level = Level("starter")
 
     def run(self):
         while True:

@@ -4,10 +4,12 @@ import os
 
 
 class Tile(pygame.sprite.Sprite):
-    def __init__(self, pos, groups):
+    def __init__(self, pos, groups, tile_char):
         super().__init__(groups)
+        sprite_name = SPRITES_SYMBOL[tile_char]
         self.image = pygame.image.load(
-            os.getcwd() + "/assets/graphics/test/rock.png"
+            os.path.join(ENIRONMENT_PATH, sprite_name + ".png")
         ).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect.inflate(0,-10)
+        if tile_char != "g":
+            self.hitbox = self.rect.inflate(0, -10)
