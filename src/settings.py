@@ -6,7 +6,7 @@ HEIGTH = 720
 FPS = 60
 TILESIZE = 64
 
-SPRITES_SYMBOL = {"g": "grass", "c": "cobble", "s": "stone", "b": "bush", "p": "player"}
+SPRITES_SYMBOL = {"g": "grass", "c": "cobble", "s": "stone", "b": "bush", "p": "player", "t": "tree"}
 
 ASSETS_PATH = os.getcwd() + "/assets"
 GRAPHICS_PATH = ASSETS_PATH + "/graphics"

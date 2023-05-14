@@ -15,8 +15,8 @@ class Level:
         self.display_surface = pygame.display.get_surface()
 
         # sprite group setup
-        self.visible_sprites = CameraGroup()
-        self.obstacle_sprites = pygame.sprite.Group()
+        self.visible_sprites = YSortCameraGroup()
+        self.obstacle_sprites = pygame.sprite.LayeredUpdates()
 
         # sprite setup
         self.create_map()
@@ -24,19 +24,19 @@ class Level:
     def create_map(self):
         for row_index, row in enumerate(self.level_map):
             for col_index, col in enumerate(row):
-                if col != "p":
-                    x = col_index * TILESIZE
-                    y = row_index * TILESIZE
-                    groups = [self.visible_sprites]
-                    if col != "g":
-                        groups.append(self.obstacle_sprites)
-                        
-                    Tile((x, y), groups, col)
-                else:
-                    Tile((x, y), [self.visible_sprites], 'g')
-                    self.player = Player(
-                        (x, y), [self.visible_sprites], self.obstacle_sprites
-                    )
+                x = col_index * TILESIZE
+                y = row_index * TILESIZE
+                match col:
+                    case "p":
+                        Tile((x, y), [self.visible_sprites], "g")
+                        self.player = Player(
+                            (x, y), [self.visible_sprites], self.obstacle_sprites
+                        )
+                    case " ":
+                        Tile((x, y), [self.visible_sprites], "g")
+                    case _:
+                        Tile((x, y), [self.visible_sprites], "g")
+                        Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
 
     def load_map_from_file(self, filepath):
         print(filepath)
@@ -51,7 +51,7 @@ class Level:
         self.visible_sprites.update()
 
 
-class CameraGroup(pygame.sprite.Group):
+class YSortCameraGroup(pygame.sprite.LayeredUpdates):
     def __init__(self):
         # general setup
         super().__init__()
@@ -66,6 +66,8 @@ class CameraGroup(pygame.sprite.Group):
         self.offset.y = player.rect.centery - self.half_height
 
         # for sprite in self.sprites():
-        for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
+        for sprite in sorted(
+            self.sprites(), key=lambda sprite: sprite.rect.centery and sprite._layer
+        ):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image, offset_pos)

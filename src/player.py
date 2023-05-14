@@ -5,7 +5,7 @@ import os
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites):
+    def __init__(self, pos, groups, obstacle_sprites, layer=2):
         super().__init__(groups)
         self.image = pygame.image.load(
             os.getcwd() + "/assets/graphics/player/down/down_0.png"
@@ -27,6 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.attack_time = None
 
         self.obstacle_sprites = obstacle_sprites
+        self._layer = layer
 
     def import_player_assets(self):
         character_path = os.getcwd() + "/assets/graphics/player/"
