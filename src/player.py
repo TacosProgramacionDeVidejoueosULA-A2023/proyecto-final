@@ -2,16 +2,17 @@ import pygame
 from .settings import *
 from .support import import_folder
 import os
+from .entity import Entity
+from .projectile import Projectile
 
 
-class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites, layer=2):
-        super().__init__(groups)
+class Player(Entity):
+    def __init__(self, pos, groups, obstacle_sprites, layer=2, speed=5):
+        super().__init__(groups, layer=layer, speed=speed)
         self.image = pygame.image.load(
             os.getcwd() + "/assets/graphics/player/down/down_0.png"
         ).convert_alpha()
-        self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect.inflate(0, -26)
+        self.set_pos(pos)
 
         # assets setup
         self.import_player_assets()
@@ -21,13 +22,25 @@ class Player(pygame.sprite.Sprite):
 
         # movement
         self.direction = pygame.math.Vector2()
-        self.speed = 5
         self.attacking = False
-        self.attack_cooldown = 400
+        self.attack_cooldown = 250
         self.attack_time = None
+        self.dead = False
+
+        self.health = player_data["health"]
+        self.exp = player_data["exp"]
+        self.speed = player_data["speed"]
+        self.attack_damage = player_data["damage"]
+        self.resistance = player_data["resistance"]
+        self.attack_radius = player_data["attack_radius"]
+        self.notice_radius = player_data["notice_radius"]
 
         self.obstacle_sprites = obstacle_sprites
         self._layer = layer
+
+    def set_pos(self, pos):
+        self.rect = self.image.get_rect(topleft=pos)
+        self.hitbox = self.rect.inflate(0, -26)
 
     def import_player_assets(self):
         character_path = os.getcwd() + "/assets/graphics/player/"
@@ -38,27 +51,40 @@ class Player(pygame.sprite.Sprite):
             self.animations[animation] = import_folder(full_path)
 
     def input(self):
+        keys = pygame.key.get_pressed()
+        mouse_pressed = pygame.mouse.get_pressed()
+
+        if keys[pygame.K_w]:
+            self.direction.y = -1
+            self.status = "up"
+        elif keys[pygame.K_s]:
+            self.direction.y = 1
+            self.status = "down"
+        else:
+            self.direction.y = 0
+
+        if keys[pygame.K_d]:
+            self.direction.x = 1
+            self.status = "right"
+        elif keys[pygame.K_a]:
+            self.direction.x = -1
+            self.status = "left"
+        else:
+            self.direction.x = 0
+
         if not self.attacking:
-            keys = pygame.key.get_pressed()
-
-            # movement input
-            if keys[pygame.K_UP]:
-                self.direction.y = -1
-                self.status = "up"
-            elif keys[pygame.K_DOWN]:
-                self.direction.y = 1
-                self.status = "down"
-            else:
-                self.direction.y = 0
-
-            if keys[pygame.K_RIGHT]:
-                self.direction.x = 1
-                self.status = "right"
-            elif keys[pygame.K_LEFT]:
-                self.direction.x = -1
-                self.status = "left"
-            else:
-                self.direction.x = 0
+            if mouse_pressed[0]:
+                self.attacking = True
+                self.attack_time = pygame.time.get_ticks()
+                projectile = Projectile(self.groups, self.status, RED)
+                projectile.rect.x = self.rect.x
+                projectile.rect.y = self.rect.y
+            elif mouse_pressed[2]:
+                self.attacking = True
+                self.attack_time = pygame.time.get_ticks()
+                projectile = Projectile(self.groups, self.status, BLUE)
+                projectile.rect.x = self.rect.x
+                projectile.rect.y = self.rect.y
 
     def move(self, speed):
         if self.direction.magnitude() != 0:
@@ -111,3 +137,5 @@ class Player(pygame.sprite.Sprite):
         self.cooldowns()
         self.animate()
         self.move(self.speed)
+        if self.health <= 0:
+            self.dead = True
