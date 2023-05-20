@@ -11,7 +11,11 @@ class Tile(pygame.sprite.Sprite):
             os.path.join(ENIRONMENT_PATH, sprite_name + ".png")
         ).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
+        self.tile_char = tile_char
         if tile_char != "g":
             self.hitbox = self.rect.inflate(0, -10)
-        
+
         self._layer = layer
+
+    def __str__(self) -> str:
+        return f"{self.tile_char}|{self.rect.topleft}|{self.rect.bottomright}"

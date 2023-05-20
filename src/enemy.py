@@ -6,16 +6,15 @@ import os
 
 
 class Enemy(Entity):
-    def __init__(self, monster_name, pos, groups, obstacle_sprites):
+    def __init__(self, pos, groups, obstacle_sprites, sprite_symbol):
         # general setup
-        super().__init__(groups)
+        super().__init__(groups, obstacle_sprites)
         self.sprite_type = "enemy"
+        self.monster_name = SPRITES_SYMBOL[sprite_symbol]
 
-        # graphics setup
-        self.import_graphics(monster_name)
         self.status = "idle"
         self.image = pygame.image.load(
-			os.path.join(ENEMIES_PATH , "red.png")
+			os.path.join(ENEMIES_PATH, self.monster_name + ".png")
         ).convert_alpha()
 
         # movement
@@ -24,7 +23,6 @@ class Enemy(Entity):
         self.obstacle_sprites = obstacle_sprites
 
         # stats
-        self.monster_name = monster_name
         monster_info = monster_data[self.monster_name]
         self.health = monster_info["health"]
         self.exp = monster_info["exp"]
@@ -40,12 +38,6 @@ class Enemy(Entity):
         self.attack_cooldown = 400
 
         self._layer = 2
-
-    def import_graphics(self, name):
-        self.animations = {"idle": [], "move": [], "attack": []}
-        main_path = f"../graphics/monsters/{name}/"
-        for animation in self.animations.keys():
-            self.animations[animation] = import_folder(main_path + animation)
 
     def get_player_distance_direction(self, player):
         enemy_vec = pygame.math.Vector2(self.rect.center)
@@ -80,16 +72,16 @@ class Enemy(Entity):
         else:
             self.direction = pygame.math.Vector2()
 
-    def animate(self):
-        animation = self.animations[self.status]
+    # def animate(self):
+    #     animation = self.animations[self.status]
 
-        self.frame_index += self.animation_speed
-        if self.frame_index >= len(animation):
-            if self.status == "attack":
-                self.can_attack = False
-            self.frame_index = 0
+    #     self.frame_index += self.animation_speed
+    #     if self.frame_index >= len(animation):
+    #         if self.status == "attack":
+    #             self.can_attack = False
+    #         self.frame_index = 0
 
-        self.rect = self.image.get_rect(center=self.hitbox.center)
+    #     self.rect = self.image.get_rect(center=self.hitbox.center)
 
     def cooldown(self):
         if not self.can_attack:
@@ -99,8 +91,10 @@ class Enemy(Entity):
 
     def update(self):
         self.move(self.speed)
-        self.animate()
+        # self.animate()
         self.cooldown()
+        if self.health <= 0:
+            self.kill()
 
     def enemy_update(self, player):
         self.get_status(player)

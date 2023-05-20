@@ -30,17 +30,13 @@ class Level:
             for col_index, col in enumerate(row):
                 x = col_index * TILESIZE
                 y = row_index * TILESIZE
+                Tile((x, y), [self.visible_sprites], "g")
 
                 if col == "p":
-                    Tile((x, y), [self.visible_sprites], "g")
                     self.player.set_pos((x,y))
-                elif col == "e":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Enemy("globin", (x, y), [self.visible_sprites], self.obstacle_sprites)
-                elif col == " ":
-                    Tile((x, y), [self.visible_sprites], "g")
-                else:
-                    Tile((x, y), [self.visible_sprites], "g")
+                elif col in ("-", "+"):
+                    Enemy((x, y), [self.visible_sprites, self.obstacle_sprites], self.obstacle_sprites, col)
+                elif col != " ":
                     Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
 
     def load_map_from_file(self, filepath):
@@ -55,6 +51,12 @@ class Level:
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
         self.visible_sprites.enemy_update(self.player)
+        if self.player.health <= 0:
+            self.player.kill()
+            return True
+
+        return False
+
         
 
 

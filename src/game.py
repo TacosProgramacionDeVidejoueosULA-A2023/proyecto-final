@@ -35,10 +35,18 @@ class Game:
     def render(self, screen):
         if screen == "home_screen":
             self.render_home_screen()
+            screen = "home_screen"
         elif screen == "starter":
             if self.level is None:
                 self.level = Level("starter")
-            self.level.run()
+
+            if self.level.run():
+                self.level = None
+                screen = "home_screen"
+
+            screen = "starter"
+        
+        return screen
 
     def run(self):
         screen = "home_screen"
@@ -52,6 +60,6 @@ class Game:
                     screen = "starter"
 
             self.screen.fill("black")
-            self.render(screen)
+            screen = self.render(screen)
             pygame.display.update()
             self.clock.tick(FPS)

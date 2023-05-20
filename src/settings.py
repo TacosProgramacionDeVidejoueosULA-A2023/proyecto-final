@@ -13,7 +13,6 @@ SPRITES_SYMBOL = {
     "z": "bush",
     "p": "player",
     "t": "tree",
-    "e": "red",
     "w": "wall",
     "l": "pole",
     "y": "tree2",
@@ -28,6 +27,8 @@ SPRITES_SYMBOL = {
     "j": "sign",
     "i": "broken_pole",
     "f": "rip",
+    "-": "blue-ghost",
+    "+": "red-ghost"
 }
 
 ASSETS_PATH = os.getcwd() + "/assets"
@@ -37,7 +38,16 @@ ENEMIES_PATH = GRAPHICS_PATH + "/enemies"
 MAPS_PATH = ASSETS_PATH + "/maps"
 
 monster_data = {
-    "globin": {
+    "red-ghost": {
+        "health": 100,
+        "exp": 100,
+        "damage": 20,
+        "speed": 3,
+        "resistance": 3,
+        "attack_radius": 80,
+        "notice_radius": 360,
+    },
+    "blue-ghost": {
         "health": 100,
         "exp": 100,
         "damage": 20,
@@ -59,6 +69,3 @@ player_data = {
 }
 
 HOME_SCREEN_INSTRUCTIONS = ["Press `Enter` to Start","Press `Esc` to Quit"]
-
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
