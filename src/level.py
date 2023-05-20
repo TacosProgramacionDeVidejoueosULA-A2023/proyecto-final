@@ -37,42 +37,6 @@ class Level:
                 elif col == "e":
                     Tile((x, y), [self.visible_sprites], "g")
                     Enemy("globin", (x, y), [self.visible_sprites], self.obstacle_sprites)
-                elif col == "w":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "w")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "l":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "l")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "b":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "b")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "a":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "a")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "r":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "r")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "y":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "y")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "u":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "u")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "d":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "d")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
-                elif col == "o":
-                    Tile((x, y), [self.visible_sprites], "g")
-                    Tile((x, y), [self.visible_sprites], "o")
-                    Tile((x, y), [self.visible_sprites, self.obstacle_sprites], col)
                 elif col == " ":
                     Tile((x, y), [self.visible_sprites], "g")
                 else:

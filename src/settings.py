@@ -10,7 +10,7 @@ SPRITES_SYMBOL = {
     "g": "grass",
     "c": "cobble",
     "s": "stone",
-    "b": "bush",
+    "z": "bush",
     "p": "player",
     "t": "tree",
     "e": "red",
@@ -23,6 +23,11 @@ SPRITES_SYMBOL = {
     "b": "chair_up",
     "r": "chair_right",
     "o": "statue",
+    "k": "rock",
+    "x": "small_pole",
+    "j": "sign",
+    "i": "broken_pole",
+    "f": "rip",
 }
 
 ASSETS_PATH = os.getcwd() + "/assets"
