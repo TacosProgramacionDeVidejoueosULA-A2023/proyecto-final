@@ -85,7 +85,7 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 projectile = Projectile(
-                    self.rect.topleft, self.groups, self.obstacle_sprites, self.status, 'blues'
+                    self.rect.topleft, self.groups, self.obstacle_sprites, self.status, 'blue'
                 )
                 projectile.rect.x = self.rect.x + 25
                 projectile.rect.y = self.rect.y + 25
