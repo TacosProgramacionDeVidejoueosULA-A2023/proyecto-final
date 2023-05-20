@@ -1,10 +1,11 @@
 import pygame
 from .settings import *
 from .enemy import Enemy
+from .support import import_folder
 
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, obstacle_sprites, status, color, attack=10):
+    def __init__(self, pos, groups, obstacle_sprites, color, status, attack=10):
         super().__init__(groups)
         self._layer = 2
         self.speed = 10
@@ -13,21 +14,36 @@ class Projectile(pygame.sprite.Sprite):
         self.image.fill(color)
         self.obstacle_sprites = obstacle_sprites
 
-        self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect
-        self.status = status
+        self.frame_index = 0
         self.attack = attack
+        self.color = color
+        self.status = status
+
+        power_name = ""
+        if self.color == "red":
+            power_name = "fireball"
+        else:
+            power_name = "whirlwind"
+
+        power_frames = os.path.join(SFX_PATH, power_name)
+        self.animations = import_folder(power_frames)
+        self.animation_speed = 0.15
+
+        self.image = self.animations[int(self.frame_index)]
+        self.rect = self.image.get_rect()
+        self.hitbox = self.rect
 
     def update(self):
-        self.collision()
         if self.status == "left":
-            self.rect.x -= self.speed
+            self.hitbox.x -= self.speed
         if self.status == "right":
-            self.rect.x += self.speed
+            self.hitbox.x += self.speed
         if self.status == "up":
-            self.rect.y -= self.speed
+            self.hitbox.y -= self.speed
         if self.status == "down":
-            self.rect.y += self.speed
+            self.hitbox.y += self.speed
+        self.animate(self.status)
+        self.collision()
 
     def collision(self):
         for sprite in self.obstacle_sprites:
@@ -35,3 +51,25 @@ class Projectile(pygame.sprite.Sprite):
                 self.kill()
                 if isinstance(sprite, Enemy):
                     sprite.health -= self.attack
+
+    def animate(self, direction):
+        # loop over the frame index
+        self.frame_index += self.animation_speed
+        if self.frame_index >= len(self.animations):
+            self.frame_index = 0
+
+        # set the image
+        match direction:
+            case "left":
+                angle = 90
+            case "right":
+                angle = 270
+            case "up":
+                angle = 0
+            case "down":
+                angle = 180
+                
+        image = self.animations[int(self.frame_index)]
+        self.image = pygame.transform.rotate(image, angle)
+        self.rect = self.image.get_rect(center=self.hitbox.center)
+

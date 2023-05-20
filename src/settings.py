@@ -34,6 +34,7 @@ SPRITES_SYMBOL = {
 ASSETS_PATH = os.getcwd() + "/assets"
 GRAPHICS_PATH = ASSETS_PATH + "/graphics"
 ENIRONMENT_PATH = GRAPHICS_PATH + "/environment"
+SFX_PATH = GRAPHICS_PATH + "/sfx"
 ENEMIES_PATH = GRAPHICS_PATH + "/enemies"
 MAPS_PATH = ASSETS_PATH + "/maps"
 FONT = os.getcwd() + '/assets/graphics/fonts/H.TTF'
