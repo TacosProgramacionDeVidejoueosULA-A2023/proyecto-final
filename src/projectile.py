@@ -14,13 +14,12 @@ class Projectile(pygame.sprite.Sprite):
         self.status = status
 
     def update(self):
-        match self.status:
-            case "left":
+            if self.status == "left":
                 self.rect.x -= self.speed
-            case "right":
+            if self.status == "right":
                 self.rect.x += self.speed
-            case "up":
+            if self.status == "up":
                 self.rect.y -= self.speed
-            case "down":
+            if self.status == "down":
                 self.rect.y += self.speed
         

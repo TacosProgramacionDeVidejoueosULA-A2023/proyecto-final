@@ -77,14 +77,14 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 projectile = Projectile(self.groups, self.status, RED)
-                projectile.rect.x = self.rect.x
-                projectile.rect.y = self.rect.y
+                projectile.rect.x = self.rect.x + 25
+                projectile.rect.y = self.rect.y + 25
             elif mouse_pressed[2]:
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 projectile = Projectile(self.groups, self.status, BLUE)
-                projectile.rect.x = self.rect.x
-                projectile.rect.y = self.rect.y
+                projectile.rect.x = self.rect.x + 25
+                projectile.rect.y = self.rect.y + 25
 
     def move(self, speed):
         if self.direction.magnitude() != 0:

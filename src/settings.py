@@ -14,6 +14,15 @@ SPRITES_SYMBOL = {
     "p": "player",
     "t": "tree",
     "e": "red",
+    "w": "wall",
+    "l": "pole",
+    "y": "tree2",
+    "u": "wall2",
+    "d": "door",
+    "a": "chair_left",
+    "b": "chair_up",
+    "r": "chair_right",
+    "o": "statue",
 }
 
 ASSETS_PATH = os.getcwd() + "/assets"
@@ -38,7 +47,7 @@ player_data = {
     "health": 100,
     "exp": 100,
     "damage": 20,
-    "speed": 3,
+    "speed": 5,
     "resistance": 3,
     "attack_radius": 80,
     "notice_radius": 360,
