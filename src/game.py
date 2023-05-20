@@ -37,14 +37,13 @@ class Game:
             self.render_home_screen()
             screen = "home_screen"
         elif screen == "starter":
+            screen = "starter"
             if self.level is None:
                 self.level = Level("starter")
 
             if self.level.run():
                 self.level = None
                 screen = "home_screen"
-
-            screen = "starter"
         
         return screen
 

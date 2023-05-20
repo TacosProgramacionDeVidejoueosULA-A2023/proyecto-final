@@ -40,7 +40,7 @@ class Player(Entity):
 
     def set_pos(self, pos):
         self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect.inflate(0, -10)
+        self.hitbox = self.rect.inflate(-10, -10)
 
     def import_player_assets(self):
         character_path = os.getcwd() + "/assets/graphics/player/"

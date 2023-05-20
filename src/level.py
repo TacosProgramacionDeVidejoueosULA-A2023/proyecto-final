@@ -24,7 +24,7 @@ class Level:
 
     def create_map(self):
         self.player = Player(
-            (0, 0), [self.visible_sprites], self.obstacle_sprites
+            (0, 0), [self.visible_sprites, self.obstacle_sprites], self.obstacle_sprites
         )
         for row_index, row in enumerate(self.level_map):
             for col_index, col in enumerate(row):

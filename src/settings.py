@@ -47,7 +47,7 @@ monster_data = {
         "damage": 20,
         "speed": 3,
         "resistance": 2,
-        "attack_radius": 80,
+        "attack_radius": 10,
         "notice_radius": 360,
     },
     "blue-ghost": {
@@ -56,18 +56,18 @@ monster_data = {
         "damage": 20,
         "speed": 3,
         "resistance": 2,
-        "attack_radius": 80,
+        "attack_radius": 10,
         "notice_radius": 360,
     }
 }
 
 player_data = {
-    "health": 100000,
+    "health": 100,
     "exp": 100,
     "damage": 20,
     "speed": 5,
     "resistance": 3,
-    "attack_radius": 80,
+    "attack_radius": 10,
     "notice_radius": 360,
 }
 

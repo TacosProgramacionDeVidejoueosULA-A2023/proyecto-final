@@ -19,7 +19,7 @@ class Enemy(Entity):
 
         # movement
         self.rect = self.image.get_rect(topleft=pos)
-        self.hitbox = self.rect.inflate(0, -10)
+        self.hitbox = self.rect.inflate(-10, -10)
         self.obstacle_sprites = obstacle_sprites
 
         # stats
@@ -54,34 +54,24 @@ class Enemy(Entity):
     def get_status(self, player):
         distance = self.get_player_distance_direction(player)[0]
 
-        if distance <= self.attack_radius and self.can_attack:
-            if self.status != "attack":
-                self.frame_index = 0
+        if player.rect.colliderect(self.rect) and self.can_attack:
             self.status = "attack"
         elif distance <= self.notice_radius:
             self.status = "move"
         else:
             self.status = "idle"
 
+        
+
     def actions(self, player):
         if self.status == "attack":
             self.attack_time = pygame.time.get_ticks()
             player.health -= self.attack_damage
+            self.can_attack = False
         elif self.status == "move":
             self.direction = self.get_player_distance_direction(player)[1]
         else:
             self.direction = pygame.math.Vector2()
-
-    # def animate(self):
-    #     animation = self.animations[self.status]
-
-    #     self.frame_index += self.animation_speed
-    #     if self.frame_index >= len(animation):
-    #         if self.status == "attack":
-    #             self.can_attack = False
-    #         self.frame_index = 0
-
-    #     self.rect = self.image.get_rect(center=self.hitbox.center)
 
     def cooldown(self):
         if not self.can_attack:
@@ -91,7 +81,6 @@ class Enemy(Entity):
 
     def update(self):
         self.move(self.speed)
-        # self.animate()
         self.cooldown()
         if self.health <= 0:
             self.kill()
@@ -99,3 +88,4 @@ class Enemy(Entity):
     def enemy_update(self, player):
         self.get_status(player)
         self.actions(player)
+

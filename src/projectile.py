@@ -3,10 +3,9 @@ from .settings import *
 from .enemy import Enemy
 from .support import import_folder
 
-
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites, color, status, attack=10):
-        super().__init__(groups)
+        super().__init__([groups[0]])
         self._layer = 2
         self.speed = 10
 
@@ -47,6 +46,9 @@ class Projectile(pygame.sprite.Sprite):
 
     def collision(self):
         for sprite in self.obstacle_sprites:
+            if type(sprite).__name__ == "Player":
+                continue
+            
             if sprite.hitbox.colliderect(self.hitbox):
                 self.kill()
                 if isinstance(sprite, Enemy):
@@ -59,15 +61,14 @@ class Projectile(pygame.sprite.Sprite):
             self.frame_index = 0
 
         # set the image
-        match direction:
-            case "left":
-                angle = 90
-            case "right":
-                angle = 270
-            case "up":
-                angle = 0
-            case "down":
-                angle = 180
+        if direction == "left":
+            angle = 90
+        elif direction ==  "right":
+            angle = 270
+        elif direction ==  "up":
+            angle = 0
+        elif direction ==  "down":
+            angle = 180
                 
         image = self.animations[int(self.frame_index)]
         self.image = pygame.transform.rotate(image, angle)
