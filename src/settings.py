@@ -41,27 +41,27 @@ FONT_SIZE = 100
 
 monster_data = {
     "red-ghost": {
-        "health": 100,
+        "health": 15,
         "exp": 100,
         "damage": 20,
         "speed": 3,
-        "resistance": 3,
+        "resistance": 2,
         "attack_radius": 80,
         "notice_radius": 360,
     },
     "blue-ghost": {
-        "health": 100,
+        "health": 15,
         "exp": 100,
         "damage": 20,
         "speed": 3,
-        "resistance": 3,
+        "resistance": 2,
         "attack_radius": 80,
         "notice_radius": 360,
     }
 }
 
 player_data = {
-    "health": 100,
+    "health": 100000,
     "exp": 100,
     "damage": 20,
     "speed": 5,
