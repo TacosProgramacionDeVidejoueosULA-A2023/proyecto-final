@@ -36,6 +36,8 @@ GRAPHICS_PATH = ASSETS_PATH + "/graphics"
 ENIRONMENT_PATH = GRAPHICS_PATH + "/environment"
 ENEMIES_PATH = GRAPHICS_PATH + "/enemies"
 MAPS_PATH = ASSETS_PATH + "/maps"
+FONT = os.getcwd() + '/assets/graphics/fonts/H.TTF'
+FONT_SIZE = 100
 
 monster_data = {
     "red-ghost": {

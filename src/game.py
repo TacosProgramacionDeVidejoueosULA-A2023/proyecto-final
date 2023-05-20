@@ -11,7 +11,7 @@ class Game:
         self.level = None
 
     def render_home_screen(self):
-        font = pygame.font.SysFont("arial", 50)
+        font = pygame.font.Font(FONT,FONT_SIZE)
         title = font.render("HENRY SPOTER", True, (255, 255, 255))
         self.screen.blit(
             title,
@@ -28,7 +28,7 @@ class Game:
                 instruction,
                 (
                     WIDTH / 2 - instruction.get_width() / 2,
-                    HEIGTH / 2 + instruction.get_height() * (2 * (i + 1)),
+                    HEIGTH / 2 + instruction.get_height() * (2 * (i + 1)) + 40,
                 ),
             )
 
